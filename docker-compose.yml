@@ -54,7 +54,7 @@ services:
       timeout: 20s
       retries: 3
     ports:
-      - "19530:19530"
+      - "29530:19530"
       - "9191:9091"
     depends_on:
       - "etcd"

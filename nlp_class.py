@@ -1,7 +1,6 @@
 from threading import Lock
 import torch
 from transformers import AutoTokenizer, AutoModel
-import numpy as np
 
 class EmbeddingLoader:
     _instance = None
