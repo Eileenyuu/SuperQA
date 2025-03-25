@@ -5,8 +5,6 @@ from apikeys import S2_API_KEY
 
 csv_file = "outputs.csv"
 S2_API_KEY = os.environ['S2_API_KEY'] = S2_API_KEY
-result_limit = 100  # each page(max 100)
-required_count = 50  # complete ref num
 
 def preprocess_text(text, field_name):
     if not text or str(text).lower() == "none":
@@ -14,11 +12,9 @@ def preprocess_text(text, field_name):
     text = str(text).strip().replace('\n', ' ').replace('\r', '')
     return ' '.join(text.split())
 
-def get_paper_information_paginated(query):
+def get_paper_information_paginated(query, required_count, result_limit):
     all_data = []
     offset = 0
-
-    print(f"Searching for at least {required_count} complete papers...")
 
     while len(all_data) < required_count:
         rsp = requests.get(
@@ -64,7 +60,6 @@ def get_paper_information_paginated(query):
             }
 
             all_data.append(filtered_data)
-            print(f"Collected {len(all_data)}/{required_count}: {filtered_data['title']}")
 
             if len(all_data) >= required_count:
                 break
@@ -80,6 +75,5 @@ def get_paper_information_paginated(query):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames, quoting=csv.QUOTE_ALL)
             writer.writeheader()
             writer.writerows(all_data)
-        print(f"\nCSV file '{csv_file}' created with {len(all_data)} complete records.")
     else:
         print("No complete records collected.")
