@@ -13,7 +13,6 @@ async def main():
     get_paper_information_paginated(key_terms, result_limit=50, required_count=20)
     connect_to_server()
     insert_into_collection("HealthTech")
-    detailed_collection_diagnostics("HealthTech")
     await search_similar_texts(key_terms)
     formatted_string = csv_to_string()
     print(final_openai_output(user_query=query, final_context=formatted_string))
