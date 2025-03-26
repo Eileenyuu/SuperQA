@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SuperQA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0b1120;
+            margin: 0;
+            padding: 0;
+            color: #dbeafe;
+        }
+        .container {
+            max-width: 700px auto;
+            margin: 10px auto;
+            background-color: #0b1120;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #0000001a;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 5em;
+            color: #14b8a6;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            border: 1px solid #334155;
+            border-radius: 5px;
+            background-color: #1e293b;
+            color: #dbeafe;
+        }
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        button:hover {
+            background-color: #14b8a6;
+        }
+        #result, #suggestion {
+            text-align: left;
+        }
+        .paper {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 4px solid #3b82f6;
+            background-color: #1e293b;
+            border-radius: 5px;
+        }
+        .paper h3 {
+            margin: 0 0 5px;
+            color: #60a5fa;
+        }
+        .paper p {
+            margin: 5px 0;
+            color: #cbd5e1;
+        }
+        .paper a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+        .paper a:hover {
+            text-decoration: underline;
+        }
+        .suggestion-box {
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #1e293b;
+        border-left: 4px solid #1DB954;
+        border-radius: 5px;
+        color: #cbd5e1;
+        }
+        .suggestion-box h3 {
+            font-size: 40px; /* Adjust the size of "Answer/Advice" */
+            font-weight: bold;
+            color: #1DB954;
+            margin-bottom: 10px;
+        }
+        .suggestion-box p {
+            font-size: 18px; /* Adjust the size of the answer text */
+            line-height: 1.6; /* Improve readability */
+            color: #dbeafe;
+        }
+        #loading {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #60a5fa;
+            display: none; /* hidden by default */
+        }
+        #loading img {
+            vertical-align: middle;
+            margin-right: 6px; /* space between the image and text */
+            width: 24px; /* adjust as needed */
+            height: 24px;
+        }
+        /* Optional: style for the new instruction text */
+        .intro-text {
+            font-size: 1.1em;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>SuperQA</h2>
+
+        <p class="intro-text">
+            SuperQA is your intelligent research companion that leverages advanced AI and NLP techniques. <br>
+            Use it to discover key insights, compare theories, and explore relevant citations. <br>
+            SuperQA can help streamline your research, but please verify any critical details. <br>
+        </p>
+
+        <input type="text" id="query" placeholder="Enter search keywords...">
+        <button onclick="search()">Search</button>
+
+        <div id="loading">
+            <img src="{{ url_for('static', filename='loadgif.gif') }}" alt="Loading...">
+            Loading, please wait...
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="suggestion"></div>
+    </div>
+    
+    <div class="container">
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function search() {
+            const query = document.getElementById("query").value.trim();
+            if (!query) {
+                alert("Please enter a search term.");
+                return;
+            }
+
+            // Clear previous results and suggestions
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("suggestion").innerHTML = "";
+
+            // Show loading indicator
+            document.getElementById("loading").style.display = "block";
+
+            const response = await fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query })
+            });
+
+            // Hide loading indicator
+            document.getElementById("loading").style.display = "none";
+
+            const data = await response.json();
+
+            const resultDiv = document.getElementById("result");
+            if (data.papers && data.papers.length > 0) {
+                data.papers.forEach(paper => {
+                    const paperDiv = document.createElement("div");
+                    paperDiv.className = "paper";
+                    paperDiv.innerHTML = `
+                        <h3>${paper.title} (${paper.year})</h3>
+                        <p>${paper.abstract}</p>
+                        <a href="${paper.link}" target="_blank">Read Paper</a>
+                    `;
+                    resultDiv.appendChild(paperDiv);
+                });
+            } else {
+                resultDiv.innerHTML = "<p>No papers found.</p>";
+            }
+
+            // Display suggested answer (if available)
+            if (data.suggestion) {
+                const suggestionDiv = document.getElementById("suggestion");
+                suggestionDiv.innerHTML = `
+                    <div class="suggestion-box">
+                        <h3>Answer/Advice:</h3>
+                        <p>${data.suggestion}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
