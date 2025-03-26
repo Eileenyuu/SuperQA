@@ -44,3 +44,10 @@ OpenAI GPT 4o Results:
 39.20% accuracy  
 Anthropic Claude 3.5 Haiku Results:  
 No clue, semanticscholar broke again last night :skull:  
+
+P.S.  
+If you are running python -m venv venv in VScode, make sure you have navigated to any python file and opened it  
+Then open a new terminal and run the command python -m venv venv  
+Then you can run pip install -r requirements.txt  
+I have no idea why but it works only if you do that.  
+Else you would get this error: Defaulting to user installation because normal site-packages is not writeable  
