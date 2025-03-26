@@ -1,0 +1,8 @@
+flask
+pymilvus
+pandas
+torch
+transformers
+openai
+requests
+anthropic
