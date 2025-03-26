@@ -25,6 +25,10 @@
             box-shadow: 0 0 10px #0000001a;
             text-align: center;
         }
+        .container:first-of-type {
+            margin-top: 20vh; /* Adjust this value as needed */
+        }
+
         h2 {
             margin-bottom: 20px;
             font-size: 2.5em;
@@ -113,7 +117,7 @@
         <button onclick="search()">Search</button>
 
         <div id="loading">
-            <img src="loadgif.gif" alt="Loading...">
+            <img src="{{ url_for('static', filename='loadgif.gif') }}" alt="Loading...">
             Loading, please wait...
         </div>
     </div>
