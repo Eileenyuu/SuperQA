@@ -18,10 +18,13 @@ docker-compose -f docker-compose.yml up
 Step 3:  
 Setup a venv environment in VScode  
 python -m venv venv  
-Make sure to kill the terminal and start a new one to initialise the venv environment    
-Windows: pip install -r requirements.txt  
+Make sure to kill the terminal and start a new one to initialise the venv environment     
 Linux: source venv/bin/activate  
-  
+
+Step 4:  
+Run this command to install all the libraries required for this project  
+Windows: pip install -r requirements.txt  
+
 Things to note when running the project:  
 To run the project, make sure the Milvus database is up and running,  
 You can check docker desktop for a more readable way to check the container is running  
