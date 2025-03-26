@@ -5,6 +5,11 @@
     <title>SuperQA</title>
     <style>
         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             font-family: Arial, sans-serif;
             background-color: #0b1120;
             margin: 0;
@@ -13,8 +18,8 @@
         }
         .container {
             max-width: 600px;
-            margin: 100px auto;
-            background-color: #121c30;
+            margin: 30px auto;
+            background-color: #0b1120;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px #0000001a;
@@ -23,7 +28,7 @@
         h2 {
             margin-bottom: 20px;
             font-size: 2.5em;
-            color: #f472b6; /* Soft bright pink */
+            color: #14b8a6;
         }
         input[type="text"] {
             width: 70%;
@@ -51,7 +56,7 @@
         button:hover {
             background-color: #14b8a6;
         }
-        #suggestion, #result {
+        #result, #suggestion {
             margin-top: 30px;
             text-align: left;
         }
@@ -85,17 +90,41 @@
             border-radius: 5px;
             color: #cbd5e1;
         }
+
+        #loading {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #60a5fa;
+            display: none; /* hidden by default */
+        }
+        #loading img {
+            vertical-align: middle;
+            margin-right: 6px; /* space between the image and text */
+            width: 24px; /* adjust as needed */
+            height: 24px; 
+        }
     </style>
 </head>
 <body>
+    
     <div class="container">
         <h2>SuperQA</h2>
         <input type="text" id="query" placeholder="Enter search keywords...">
         <button onclick="search()">Search</button>
 
-        <!-- Suggested Answer section now appears first -->
+        <div id="loading">
+            <img src="loadgif.gif" alt="Loading...">
+            Loading, please wait...
+        </div>
+    </div>
+
+    <div class="container">
         <div id="suggestion"></div>
+    </div>
+    
+    <div class="container">  
         <div id="result"></div>
+        
     </div>
 
     <script>
@@ -106,9 +135,12 @@
                 return;
             }
 
-            // Clear previous suggestions and results
-            document.getElementById("suggestion").innerHTML = "";
+            // Clear previous results and suggestions
             document.getElementById("result").innerHTML = "";
+            document.getElementById("suggestion").innerHTML = "";
+
+            // Show loading indicator
+            document.getElementById("loading").style.display = "block";
 
             const response = await fetch('/search', {
                 method: 'POST',
@@ -118,20 +150,11 @@
                 body: JSON.stringify({ query })
             });
 
+            // Hide loading indicator
+            document.getElementById("loading").style.display = "none";
+
             const data = await response.json();
 
-            // Display suggested answer (if available)
-            if (data.suggestion) {
-                const suggestionDiv = document.getElementById("suggestion");
-                suggestionDiv.innerHTML = `
-                    <div class="suggestion-box">
-                        <h3>Suggested Answer:</h3>
-                        <p>${data.suggestion}</p>
-                    </div>
-                `;
-            }
-
-            // Display related literature (papers)
             const resultDiv = document.getElementById("result");
             if (data.papers && data.papers.length > 0) {
                 data.papers.forEach(paper => {
@@ -146,6 +169,17 @@
                 });
             } else {
                 resultDiv.innerHTML = "<p>No papers found.</p>";
+            }
+
+            // Display suggested answer (if available)
+            if (data.suggestion) {
+                const suggestionDiv = document.getElementById("suggestion");
+                suggestionDiv.innerHTML = `
+                    <div class="suggestion-box">
+                        <h3>Suggested Answer:</h3>
+                        <p>${data.suggestion}</p>
+                    </div>
+                `;
             }
         }
     </script>
