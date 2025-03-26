@@ -123,7 +123,7 @@ def insert_into_collection(collection_name):
         print(f"An error occurred during insertion: {e}")
         return False
 
-async def search_similar_texts(query_text, top_k=5):
+async def search_similar_texts(query_text, top_k=50):
     """
     Performs similarity search on the embedding field and refines results
     based on timestamp if mentioned by the user, otherwise defaults to regular similarity search.
