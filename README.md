@@ -46,7 +46,7 @@ Anthropic Claude 3.5 Haiku Results:
 No clue, semanticscholar broke again last night :skull:  
 
 P.S.  
-If you are running python -m venv venv in VScode, make sure you have navigated to any python file and opened it  
+If you are the project in VScode, make sure you have navigated to any python file in the repository and open it  
 Then open a new terminal and run the command python -m venv venv  
 Then you can run pip install -r requirements.txt  
 I have no idea why but it works only if you do that.  
