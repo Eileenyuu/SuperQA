@@ -1,5 +1,6 @@
 # SuperQA
-![alt text]([https://github.com/Eileenyuu/SuperQA/blob/main/hackathon.jpg])
+
+![alt text](https://github.com/Eileenyuu/SuperQA/blob/main/hackathon.jpg)
 
 This is a HealthTech AI Hub Hackathon Challenge.  
 Hackathon Challenge 3.1 : Create a MVP for a AI-Powered Literature Review Assistant.
