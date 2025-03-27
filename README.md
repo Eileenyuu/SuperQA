@@ -43,7 +43,7 @@ Spoiler alert, it probably won't be that accurate :skull:
 OpenAI GPT 4o Results:  
 39.20% accuracy  
 Anthropic Claude 3.5 Haiku Results:  
-No clue, semanticscholar broke again last night :skull:  
+23.62% accuracy  
 
 P.S.  
 If you are the project in VScode, make sure you have navigated to any python file in the repository and open it  
