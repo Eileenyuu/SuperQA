@@ -11,13 +11,13 @@ Hackathon Challenge 3.1 : Create a MVP for a AI-Powered Literature Review Assist
 
 Running the Program:
 
-Step 1:
+## Step 1:
 Clone the repository
 ```
 git clone git@github.com:Eileenyuu/SuperQA.git
 ```
 
-Step 2:
+## Step 2:
 Set up the docker network
 First downlaod docker desktop    
 Once docker desktop or docker is downloaded, in your terminal 
@@ -28,7 +28,7 @@ docker-compose up -d
 docker-compose -f docker-compose.yml up  
 ```
   
-Step 3: 
+## Step 3: 
 Setup the environment 
 > [!NOTE] 
 > If you are using VScode, make sure you have navigated to any python file in the repository and open it before activating the environment and installing the dependencies in the requirement.txt file.  
@@ -41,7 +41,7 @@ Make sure to kill the terminal and start a new one to initialise the venv enviro
 source venv/bin/activate 
 ```
 
-Step 4:  
+## Step 4:  
 Run this command to install all the libraries required for this project.
 ```  
 pip install -r requirements.txt 
@@ -61,7 +61,8 @@ pip install -r requirements.txt
 > If it works, a file called questions.csv will be generated  
 > Then, go to lab_bench_test.py and run the code to identify how accurate the AI agent is  
 > Spoiler alert, it probably won't be that accurate :skull:  
-  
+
+## Results: 
 OpenAI GPT 4o Results:  
 39.20% accuracy  
 Anthropic Claude 3.5 Haiku Results:  
